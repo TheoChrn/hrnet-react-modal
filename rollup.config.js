@@ -1,39 +1,44 @@
-import babel from "@rollup/plugin-babel"
-import resolve from "@rollup/plugin-node-resolve"
-import external from 'rollup-plugin-peer-deps-external'
-import { terser } from 'rollup-plugin-terser'
-import postcss from 'rollup-plugin-postcss'
-import sass from 'rollup-plugin-sass';
-import postcssPresetEnv from "postcss-preset-env"
-import commonjs from "@rollup/plugin-commonjs"
-import autoprefixer from "autoprefixer"
+import babel from "@rollup/plugin-babel";
+import resolve from "@rollup/plugin-node-resolve";
+import external from 'rollup-plugin-peer-deps-external';
+import { terser } from 'rollup-plugin-terser';
+import postcss from 'rollup-plugin-postcss';
+import postcssPresetEnv from "postcss-preset-env";
+import commonjs from "@rollup/plugin-commonjs";
+import autoprefixer from "autoprefixer";
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
-export default [{
+export default {
   input: './src/index.js',
   output: [
     {
       file: 'dist/index.js',
-      format: 'cjs'
+      format: 'cjs',
+      globals: { react: 'React' },
     },
     {
       file: 'dist/index.esm.js',
       format: 'esm',
+      globals: { react: 'React' },
     }
   ],
   plugins: [
+    peerDepsExternal(),
     postcss({
       plugins: [
         postcssPresetEnv(),
-        autoprefixer()
+        autoprefixer(),
       ],
-      autoModules: false,
-      onlyModules: false,
-      extract: true,
-      extensions: ['.scss'],
-      use: ['sass'],
-      minimize: true,
+      modules: true, 
+      extract: false, 
+      autoModules: true,
       sourceMap: false,
-      modules: true,
+      minimize: true,
+      extensions: ['.scss'], 
+      inject: true,
+      sass: {
+        includePaths: ['node_modules'],
+      },
     }),
     babel({
       exclude: 'node_modules/**',
@@ -43,10 +48,6 @@ export default [{
     external(),
     resolve(),
     terser(),
-    sass({
-      insert: true,
-      output: true
-    })
   ],
   external: ["react", "react-dom"],
-}]
+};
