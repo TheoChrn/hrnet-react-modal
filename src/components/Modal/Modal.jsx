@@ -9,22 +9,25 @@ export const Modal = ({
   containerClassName,
   modalClassName,
   closeButtonClassName,
+  btnIcon,
 }) => {
   if (!display) {
     return null;
   }
-  const modalContainerClasses = `${styles.modalContainer} ${
-    containerClassName || ""
-  }`;
-  const modalClasses = `${styles.modal} ${modalClassName || ""}`;
-  const closeButtonClasses = `${styles.closeModalBtn} ${
-    closeButtonClassName || ""
-  }`;
+
+  const btnIcons = btnIcon ? btnIcon : <>&#10006;</>;
+  const modalContainerClasses = containerClassName
+    ? containerClassName
+    : styles.modalContainer;
+  const modalClasses = modalClassName ? modalClassName : styles.modal;
+  const closeButtonClasses = closeButtonClassName
+    ? closeButtonClassName
+    : styles.closeModalBtn;
   return (
     <div className={modalContainerClasses}>
       <div className={modalClasses}>
         <button className={closeButtonClasses} onClick={onClose}>
-          &#10006;
+          {btnIcons}
         </button>
         <div className={className}>{children}</div>
       </div>
