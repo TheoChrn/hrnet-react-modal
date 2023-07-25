@@ -33,8 +33,8 @@ It will also need a content inside the component tags
 
 ## Customized modal
 To custom our modal we'll need to add more props
-- `containerClassName` Is applied on the modal container
-- `modalClassName` Is applied on the modal
+- `containerClassName` Is applied on the modal container (can be used to blur the background)
+- `modalClassName` Is applied on the modal 
 - `closeButtonClassName` Is applied on the button
 - `className` Is applied on the modal content
 - `BtnIcon` Set a custom button icon
